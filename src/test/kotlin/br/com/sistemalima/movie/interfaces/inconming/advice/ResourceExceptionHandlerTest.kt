@@ -3,6 +3,7 @@ package br.com.sistemalima.movie.interfaces.inconming.advice
 import br.com.sistemalima.movie.domain.exceptions.BadRequestException
 import br.com.sistemalima.movie.domain.exceptions.ResourceNotFoundException
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.eq
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -57,7 +58,7 @@ internal class ResourceExceptionHandlerTest {
     @Test
     fun handleConstraintViolationException() {
         // Dado
-        val exception = ConstraintViolationException(testMessage, any())
+        val exception = ConstraintViolationException(eq(testMessage), any())
 
         // Quando
 

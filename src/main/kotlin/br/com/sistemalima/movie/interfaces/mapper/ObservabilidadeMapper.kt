@@ -21,18 +21,23 @@ class ObservabilidadeMapper {
 
         logger.info(String.format("$tag version: $version, resourceName: $resourceName"))
 
-        validaVersion(version, listVersion)
+        val status = validaVersion(version, listVersion)
 
-        return Observabilidade(
-            version = version!!,
-            resourceName = resourceName
-        )
+        if (status) {
+            return Observabilidade(
+                version = version!!,
+                resourceName = resourceName
+            )
+        } else {
+            throw BadRequestException(errorMessage)
+        }
 
     }
 
-    fun validaVersion(version: String?, list: List<VersionApiEnum>) {
+    private fun validaVersion(version: String?, list: List<VersionApiEnum>): Boolean {
 
         logger.info(String.format("method: validaVersion, $tag version: $version"))
+        var status = false
 
         if (version == null) {
             logger.error(String.format("Error message: $errorMessage, $tag"))
@@ -41,12 +46,14 @@ class ObservabilidadeMapper {
 
         for(i in list) {
             if(i.version == version) {
+                status = true
                 break
             } else {
                 logger.error(String.format("Error message: $errorMessage, method: validaVersion, $tag"))
                 throw BadRequestException(errorMessage)
             }
         }
+        return status
 
     }
 }
