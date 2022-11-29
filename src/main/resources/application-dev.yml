@@ -1,0 +1,4 @@
+servers:
+  imdb-filmes:
+    url: https://imdb-api.com/en
+    apikey: ${API_KEY}
