@@ -1,3 +1,11 @@
+# documentação Swagger http://localhost:8080/swagger-ui.html
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+
 servers:
   imdb-filmes:
     url: https://imdb-api.com/en
@@ -38,3 +46,5 @@ resilience4j.retry:
       ignoreExceptions:
         - br.com.sistemalima.movie.domain.exceptions.ResourceNotFoundException
         - br.com.sistemalima.movie.domain.exceptions.BadRequestException
+
+
