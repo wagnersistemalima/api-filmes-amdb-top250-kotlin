@@ -5,6 +5,7 @@ import br.com.sistemalima.movie.domain.dto.ListaFilmesResponseDTO
 import br.com.sistemalima.movie.domain.entity.Filme
 import br.com.sistemalima.movie.domain.service.MovieService
 import br.com.sistemalima.movie.interfaces.mapper.ObservabilidadeMapper
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -33,6 +34,7 @@ class MovieController(
     }
 
     @GetMapping(value = ["/top250"])
+    @CircuitBreaker(name = "listarTop250Filmes", fallbackMethod = "")
     fun listarFilmesTop250(
         @RequestHeader(value = "Accept-Version") @Valid @NotBlank version: String?
     ): ResponseEntity<ListaFilmesResponseDTO<List<Filme>>> {
@@ -50,6 +52,7 @@ class MovieController(
     }
 
     @PostMapping(value = ["/favoritos/{id}"])
+    @CircuitBreaker(name = "buscarFavoritos", fallbackMethod = "")
     fun favoritos(
         @RequestHeader(value = "Accept-Version") @Valid @NotBlank version: String?,
         @PathVariable @NotBlank id: String?

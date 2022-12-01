@@ -2,3 +2,39 @@ servers:
   imdb-filmes:
     url: https://imdb-api.com/en
     apikey: ${API_KEY}
+
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: false
+      slidingWindowSize: 5
+      minimumNumberOfCalls: 4
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 50s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 100
+      recordExceptions:
+        - feign.FeignException
+        - java.io.IOException
+      ignoreExceptions:
+        - br.com.sistemalima.movie.domain.exceptions.ResourceNotFoundException
+        - br.com.sistemalima.movie.domain.exceptions.BadRequestException
+  instances:
+    listarTop250Filmes:
+      baseConfig: default
+    buscarFavoritos:
+      baseConfig: default
+      minimumNumberOfCalls: 10
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 2
+      waitDuration: 1000
+      retryExceptions:
+        - feign.FeignException
+        - java.lang.Exception
+      ignoreExceptions:
+        - br.com.sistemalima.movie.domain.exceptions.ResourceNotFoundException
+        - br.com.sistemalima.movie.domain.exceptions.BadRequestException

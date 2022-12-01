@@ -11,6 +11,7 @@ import org.mockito.InjectMocks
 import org.springframework.http.HttpStatus
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import java.io.IOException
 import javax.validation.ConstraintViolationException
 
 @ExtendWith(SpringExtension::class)
@@ -68,6 +69,38 @@ internal class ResourceExceptionHandlerTest {
         assertEquals(HttpStatus.BAD_REQUEST.value(), response.status)
         assertEquals(testMessage, response.message)
         assertEquals(HttpStatus.BAD_REQUEST.name, response.error)
+
+    }
+
+    @Test
+    fun handleIoException() {
+        // Dado
+        val exception = IOException(testMessage)
+
+        // Quando
+
+        val response = resourceExceptionHandler.handleIOException(exception, request)
+
+        // Então
+        assertEquals(HttpStatus.BAD_GATEWAY.value(), response.status)
+        assertEquals(testMessage, response.message)
+        assertEquals(HttpStatus.BAD_GATEWAY.name, response.error)
+
+    }
+
+    @Test
+    fun handleException() {
+        // Dado
+        val exception = Exception(testMessage)
+
+        // Quando
+
+        val response = resourceExceptionHandler.handleException(exception, request)
+
+        // Então
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.status)
+        assertEquals(testMessage, response.message)
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.name, response.error)
 
     }
 }

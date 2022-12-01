@@ -41,18 +41,27 @@ API do IMDB! Plataforma mais famosa que agrupa basicamente todos os filmes, sér
 
 ### Documentação da api
 * url swagger: http://localhost:8080/swagger-ui.html
-* Obrigatorio passar no header Api-Key gerada no site do webservice url : https://imdb-api.com/api
 * Obrigatorio passar no header a Accept-Version da API de filme: v1
-* url filme: http://localhost:8080/filmes/top250
+* GET url filme: http://localhost:8080/filmes/top250
+* POST url filme favorito: http://localhost:8080/filmes/favoritos/{id}
 
 
-### Fluxo de sucesso
+### Resilience4j
+* Resilience4j é uma biblioteca leve de tolerância a falhas projetada para programação funcional.
+* As chamadas para serviços e recursos remotos podem falhar devido a instabilidades transitórias, como conexões de rede lentas, limites de tempo, recursos sobrecarregados ou temporariamente disponíveis. Estas falhas normalmente são corrigidas automaticamente após um curto período de tempo e uma aplicação robusta na cloud deve estar preparada para manipulá-las ao utilizar uma estratégia como o padrão de repetição.
+
+![alter-text](./image/exemplo1.png)
+
+* Construir um serviço tolerante a falhas e resiliente, que consiga sobreviver quando os principais serviços que ele consome estiverem passando por instabilidade.
+
+![alter-text](./image/circuity-breaker.png)
 
 
+### Pipeline CI/CD seguro com GitHub Actions
+* Branch principal protegida main
+* Brach develop / pull request
+* build test
+* build imagem
+* publicação da imagem no docker registry
 
-
-## Fluxo com mensagem de erro, passando APIKey invalida
-
-
-
-## Fluxo com mensagem de erro, passando a Versão da API de filme invalida
+![alter-text](./image/ci-cd.png)

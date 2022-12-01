@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import java.io.IOException
 import javax.servlet.http.HttpServletRequest
 import javax.validation.ConstraintViolationException
 
@@ -61,6 +62,30 @@ class ResourceExceptionHandler {
         return ErrorView(
             status = HttpStatus.NOT_FOUND.value(),
             error = HttpStatus.NOT_FOUND.name,
+            message = exception.message.toString(),
+            path = request.servletPath
+
+        )
+    }
+
+    @ExceptionHandler(IOException::class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    fun handleIOException(exception: IOException, request: HttpServletRequest): ErrorView {
+        return ErrorView(
+            status = HttpStatus.BAD_GATEWAY.value(),
+            error = HttpStatus.BAD_GATEWAY.name,
+            message = exception.message.toString(),
+            path = request.servletPath
+
+        )
+    }
+
+    @ExceptionHandler(Exception::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleException(exception: Exception, request: HttpServletRequest): ErrorView {
+        return ErrorView(
+            status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            error = HttpStatus.INTERNAL_SERVER_ERROR.name,
             message = exception.message.toString(),
             path = request.servletPath
 
