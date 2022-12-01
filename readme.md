@@ -44,7 +44,24 @@ API do IMDB! Plataforma mais famosa que agrupa basicamente todos os filmes, sér
 * Obrigatorio passar no header a Accept-Version da API de filme: v1
 * GET url filme: http://localhost:8080/filmes/top250
 * POST url filme favorito: http://localhost:8080/filmes/favoritos/{id}
+* Dependencia swagger
+```
 
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+</dependency>
+
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+</dependency>
+
+
+```
 
 ### Resilience4j
 * Resilience4j é uma biblioteca leve de tolerância a falhas projetada para programação funcional.
